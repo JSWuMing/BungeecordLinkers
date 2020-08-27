@@ -1,0 +1,8 @@
+#
+# Author: MrCubee
+#
+private_key: private.p8
+
+keys:
+  mrcubee: mrcubee.spki
+disable: []
