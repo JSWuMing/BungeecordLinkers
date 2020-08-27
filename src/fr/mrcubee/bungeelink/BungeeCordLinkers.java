@@ -46,7 +46,6 @@ public class BungeeCordLinkers extends Plugin {
         if (keys == null || keys.isEmpty())
             return;
         for (String name : configuration.getKeys()) {
-            this.getLogger().info("LOAD " + name + " KEY ...");
             keyFile = new File(this.getDataFolder(), "keys/" + configuration.get(name));
             this.keyManager.register(name, KeyUtils.loadPublicKey(keyFile.toURI()));
         }

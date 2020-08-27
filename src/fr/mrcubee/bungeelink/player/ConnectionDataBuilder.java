@@ -48,8 +48,9 @@ public class ConnectionDataBuilder {
         connectionData = buildFrom(player);
         if (connectionData == null)
             return null;
-        signatureBytes = KeyUtils.createSignature(privateKey, Base64.getEncoder().encode(connectionData.toString().getBytes()));
-        connectionData.signature = Base64.getEncoder().encodeToString(signatureBytes);
+        signatureBytes = KeyUtils.createSignature(privateKey, connectionData.toString().getBytes());
+        if (signatureBytes != null)
+            connectionData.signature = new String(signatureBytes, 0, 0, signatureBytes.length);
         return connectionData;
     }
 
