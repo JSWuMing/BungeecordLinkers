@@ -67,7 +67,9 @@ public class PreLogin implements Listener {
         this.bungeeCordLinker.getProxy().getPluginManager().callEvent(playerLoginFromLinkerEvent);
         event.setCancelled(playerLoginFromLinkerEvent.isCancelled());
         event.setCancelReason(playerLoginFromLinkerEvent.getCancelReasonComponents());
-        if (!playerLoginFromLinkerEvent.isCancelled())
+        if (!playerLoginFromLinkerEvent.isCancelled()) {
+            this.bungeeCordLinker.getConnectionManager().register(connectionData.getUuid(), connectionData);
             ConnectionDataUtils.applyPlayerData(initialHandler, connectionData);
+        }
     }
 }
