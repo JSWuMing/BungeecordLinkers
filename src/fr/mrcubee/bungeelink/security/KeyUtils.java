@@ -13,9 +13,22 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
-import java.util.logging.Logger;
 
 public class KeyUtils {
+
+    public static KeyPair createKeyPair(int size) {
+        KeyPairGenerator keyPairGenerator = null;
+
+        if (size < 1)
+            return null;
+        try {
+            keyPairGenerator = KeyPairGenerator.getInstance("RSA");
+        } catch (NoSuchAlgorithmException ignored) {}
+        if (keyPairGenerator == null)
+            return null;
+        keyPairGenerator.initialize(size);
+        return keyPairGenerator.generateKeyPair();
+    }
 
     public static PrivateKey loadPrivateKey(byte[] bytes) {
         KeyFactory keyFactory;
