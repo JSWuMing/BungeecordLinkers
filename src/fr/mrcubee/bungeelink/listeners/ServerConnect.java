@@ -8,6 +8,8 @@ import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.connection.InitialHandler;
 import net.md_5.bungee.event.EventHandler;
 
+import java.security.PrivateKey;
+
 public class ServerConnect implements Listener {
 
     private final BungeeCordLinkers bungeeCordLinker;
@@ -19,9 +21,14 @@ public class ServerConnect implements Listener {
     @EventHandler
     public void serverConnect(ServerConnectEvent event) {
         ConnectionData connectionData = this.bungeeCordLinker.getConnectionManager().get(event.getPlayer().getUniqueId());
+        PrivateKey privateKey = this.bungeeCordLinker.getKeyManager().getPrivateKey();
 
+        if (connectionData == null) {
+            connectionData = (privateKey == null) ? ConnectionDataBuilder.buildFrom(event.getPlayer())
+                    : ConnectionDataBuilder.buildFrom(event.getPlayer(), privateKey);
+        }
         if (connectionData == null)
-            connectionData = ConnectionDataBuilder.buildFrom(event.getPlayer(), this.bungeeCordLinker.getKeyManager().getPrivateKey());
+            return;
         ((InitialHandler) event.getPlayer().getPendingConnection()).getHandshake().setHost(connectionData.toString());
     }
 
