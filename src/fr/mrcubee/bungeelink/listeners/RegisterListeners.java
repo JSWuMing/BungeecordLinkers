@@ -14,11 +14,11 @@ public class RegisterListeners {
             return;
         pluginManager = bungeeCordLinker.getProxy().getPluginManager();
         listeners = new Listener[] {
-                new PlayerDisconnect(bungeeCordLinker),
-                new PlayerLoginFromLinker(bungeeCordLinker),
-                new PluginMessage(),
-                new PreLogin(bungeeCordLinker),
-                new ServerConnect(bungeeCordLinker)
+                new PlayerDisconnectListener(bungeeCordLinker),
+                new PlayerLoginFromLinkerListener(bungeeCordLinker),
+                new PluginMessageListener(bungeeCordLinker),
+                new PreLoginListener(bungeeCordLinker),
+                new ServerConnectListener(bungeeCordLinker)
         };
         for (Listener listener : listeners)
             pluginManager.registerListener(bungeeCordLinker, listener);

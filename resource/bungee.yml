@@ -3,3 +3,15 @@ version: 1.0
 author: MrCubee
 website: http://discord.mrcubee.fr
 main: fr.mrcubee.bungeelink.BungeeCordLinkers
+commands:
+  link:
+    description: Allows you to manage public keys.
+    permission: bungeecordlinkers.command.link
+    usage: |
+      /link load [key name] [key file]
+      /link remove [key name]
+      /link disable [key name]
+      /link enable [key name]
+permissions:
+  bungeecordlinkers.command.link:
+    description: Allow link command execution.

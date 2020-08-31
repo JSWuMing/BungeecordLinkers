@@ -6,11 +6,11 @@ import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
 import net.md_5.bungee.event.EventPriority;
 
-public class PlayerDisconnect implements Listener {
+public class PlayerDisconnectListener implements Listener {
 
     private BungeeCordLinkers bungeeCordLinker;
 
-    protected PlayerDisconnect(BungeeCordLinkers bungeeCordLinker) {
+    protected PlayerDisconnectListener(BungeeCordLinkers bungeeCordLinker) {
         this.bungeeCordLinker = bungeeCordLinker;
     }
 

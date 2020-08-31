@@ -1,5 +1,7 @@
 package fr.mrcubee.bungeelink;
 
+import fr.mrcubee.bungeelink.command.LinkerCommand;
+import fr.mrcubee.bungeelink.command.LinkerTabExecutor;
 import fr.mrcubee.bungeelink.config.ConfigurationManager;
 import fr.mrcubee.bungeelink.listeners.RegisterListeners;
 import fr.mrcubee.bungeelink.player.ConnectionManager;
@@ -9,19 +11,22 @@ import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.config.Configuration;
 
 import java.io.File;
-import java.security.PublicKey;
 import java.util.Collection;
 import java.util.List;
 
 public class BungeeCordLinkers extends Plugin {
 
+    private File keyFolder;
     private KeyManager keyManager;
     private ConnectionManager connectionManager;
     private Configuration config;
 
     @Override
     public void onLoad() {
-        this.keyManager = new KeyManager(this.getLogger());
+        this.keyFolder = new File(this.getDataFolder(), "keys/");
+        if (!this.keyFolder.exists())
+            this.keyFolder.mkdirs();
+        this.keyManager = new KeyManager(this.keyFolder, this.getLogger());
         this.connectionManager = new ConnectionManager();
     }
 
@@ -30,7 +35,7 @@ public class BungeeCordLinkers extends Plugin {
 
         if (configuration == null)
             return;
-        keyFile = new File(this.getDataFolder(), "keys/" + configuration.getString("private_key"));
+        keyFile = new File(this.keyFolder, configuration.getString("private_key"));
         if (!keyFile.exists() || !keyFile.isFile())
             return;
         this.getKeyManager().setPrivateKey(KeyUtils.loadPrivateKey(keyFile.toURI()));
@@ -45,13 +50,11 @@ public class BungeeCordLinkers extends Plugin {
         keys = configuration.getKeys();
         if (keys == null || keys.isEmpty())
             return;
-        for (String name : configuration.getKeys()) {
-            keyFile = new File(this.getDataFolder(), "keys/" + configuration.get(name));
-            this.keyManager.register(name, KeyUtils.loadPublicKey(keyFile.toURI()));
-        }
+        for (String name : configuration.getKeys())
+            this.keyManager.register(name, configuration.getString(name));
     }
 
-    private void disableKey(Configuration configuration) {
+    private void loadDisableKey(Configuration configuration) {
         List<String> keyDisabled;
 
         if (configuration == null)
@@ -65,24 +68,21 @@ public class BungeeCordLinkers extends Plugin {
 
     @Override
     public void onEnable() {
-        File keyFolder;
-
+        this.getProxy().getPluginManager().registerCommand(this, new LinkerTabExecutor(this));
         this.config = ConfigurationManager.getConfig(this, "config");
         if (this.config == null) {
             this.getLogger().severe("Config Error !");
             return;
         }
-        keyFolder = new File(this.getDataFolder(), "keys/");
-        if (!keyFolder.exists())
-            keyFolder.mkdirs();
         loadPrivateKeyFromConfig(this.config);
         loadPublicKeysFromConfig(this.config.getSection("keys"));
+        loadDisableKey(this.config);
         RegisterListeners.register(this);
     }
 
     @Override
     public void onDisable() {
-        ConfigurationManager.saveConfig(this, config, "config");
+        ConfigurationManager.saveConfig(this, this.keyManager.toConfiguration(), "config");
     }
 
     public KeyManager getKeyManager() {
@@ -91,5 +91,13 @@ public class BungeeCordLinkers extends Plugin {
 
     public ConnectionManager getConnectionManager() {
         return connectionManager;
+    }
+
+    public File getKeyFolder() {
+        return keyFolder;
+    }
+
+    public Configuration getConfig() {
+        return config;
     }
 }

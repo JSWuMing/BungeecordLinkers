@@ -14,11 +14,11 @@ import net.md_5.bungee.connection.InitialHandler;
 import net.md_5.bungee.event.EventHandler;
 import net.md_5.bungee.event.EventPriority;
 
-public class PreLogin implements Listener {
+public class PreLoginListener implements Listener {
 
     private final BungeeCordLinkers bungeeCordLinker;
 
-    protected PreLogin(BungeeCordLinkers bungeeCordLinker) {
+    protected PreLoginListener(BungeeCordLinkers bungeeCordLinker) {
         this.bungeeCordLinker = bungeeCordLinker;
     }
 

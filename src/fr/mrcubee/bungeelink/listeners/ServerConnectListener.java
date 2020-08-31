@@ -10,11 +10,11 @@ import net.md_5.bungee.event.EventHandler;
 
 import java.security.PrivateKey;
 
-public class ServerConnect implements Listener {
+public class ServerConnectListener implements Listener {
 
     private final BungeeCordLinkers bungeeCordLinker;
 
-    protected ServerConnect(BungeeCordLinkers bungeeCordLinker) {
+    protected ServerConnectListener(BungeeCordLinkers bungeeCordLinker) {
         this.bungeeCordLinker = bungeeCordLinker;
     }
 

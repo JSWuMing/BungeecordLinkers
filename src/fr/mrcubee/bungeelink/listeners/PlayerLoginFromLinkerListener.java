@@ -7,11 +7,11 @@ import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
 import net.md_5.bungee.event.EventPriority;
 
-public class PlayerLoginFromLinker implements Listener {
+public class PlayerLoginFromLinkerListener implements Listener {
 
     private final BungeeCordLinkers bungeeCordLinker;
 
-    protected PlayerLoginFromLinker(BungeeCordLinkers bungeeCordLinker) {
+    protected PlayerLoginFromLinkerListener(BungeeCordLinkers bungeeCordLinker) {
         this.bungeeCordLinker = bungeeCordLinker;
     }
 
