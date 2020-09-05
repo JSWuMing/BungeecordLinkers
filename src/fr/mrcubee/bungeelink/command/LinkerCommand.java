@@ -86,6 +86,7 @@ public class LinkerCommand extends Command {
             return;
         if (args[0].equalsIgnoreCase("load") && args.length > 2) {
             commandLoadKey(commandSender, args[1], args[2]);
+            this.bungeeCordLinkers.saveConfig();
             return;
         }
         if (names == null || !names.contains(args[1])) {
@@ -93,5 +94,6 @@ public class LinkerCommand extends Command {
             return;
         }
         commandKeyAction(commandSender, args[1], args[0]);
+        this.bungeeCordLinkers.saveConfig();
     }
 }

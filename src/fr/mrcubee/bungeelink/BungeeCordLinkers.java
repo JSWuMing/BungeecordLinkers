@@ -1,6 +1,5 @@
 package fr.mrcubee.bungeelink;
 
-import fr.mrcubee.bungeelink.command.LinkerCommand;
 import fr.mrcubee.bungeelink.command.LinkerTabExecutor;
 import fr.mrcubee.bungeelink.config.ConfigurationManager;
 import fr.mrcubee.bungeelink.listeners.RegisterListeners;
@@ -69,8 +68,7 @@ public class BungeeCordLinkers extends Plugin {
     @Override
     public void onEnable() {
         this.getProxy().getPluginManager().registerCommand(this, new LinkerTabExecutor(this));
-        this.config = ConfigurationManager.getConfig(this, "config");
-        if (this.config == null) {
+        if (getConfig() == null) {
             this.getLogger().severe("Config Error !");
             return;
         }
@@ -78,11 +76,6 @@ public class BungeeCordLinkers extends Plugin {
         loadPublicKeysFromConfig(this.config.getSection("keys"));
         loadDisableKey(this.config);
         RegisterListeners.register(this);
-    }
-
-    @Override
-    public void onDisable() {
-        ConfigurationManager.saveConfig(this, this.keyManager.toConfiguration(), "config");
     }
 
     public KeyManager getKeyManager() {
@@ -98,6 +91,12 @@ public class BungeeCordLinkers extends Plugin {
     }
 
     public Configuration getConfig() {
-        return config;
+        if (this.config == null)
+            this.config = ConfigurationManager.getConfig(this, "config");
+        return this.config;
+    }
+
+    public void saveConfig() {
+        ConfigurationManager.saveConfig(this, this.keyManager.toConfiguration(), "config");
     }
 }
