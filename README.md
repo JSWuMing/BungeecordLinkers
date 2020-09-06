@@ -4,4 +4,4 @@
 # Contributors
  - MrCubee
 # Social Networks
-#### [Discord](https://discord.gg/jXsajE9)
+[![Discord](https://image.flaticon.com/icons/png/512/2111/2111370.png)](https://discord.gg/jXsajE9)
