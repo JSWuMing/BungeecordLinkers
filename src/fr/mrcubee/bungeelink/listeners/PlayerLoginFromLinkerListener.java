@@ -1,6 +1,5 @@
 package fr.mrcubee.bungeelink.listeners;
 
-import com.google.gson.GsonBuilder;
 import fr.mrcubee.bungeelink.BungeeCordLinkers;
 import fr.mrcubee.bungeelink.api.event.PlayerLoginFromLinkerEvent;
 import net.md_5.bungee.api.plugin.Listener;
@@ -20,7 +19,7 @@ public class PlayerLoginFromLinkerListener implements Listener {
         String keyUsed;
 
         this.bungeeCordLinker.getLogger().info("[" + event.getConnection().getName() + "] <-> Connection from partner.\n"
-                 + event.getConnectionData().toString());
+                 + event.getConnectionData().toFormattedString());
         keyUsed = event.getKeyUsed();
         if (!event.isCancelled()) {
             if (keyUsed == null)

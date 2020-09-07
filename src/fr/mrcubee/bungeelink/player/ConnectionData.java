@@ -117,8 +117,12 @@ public class ConnectionData {
         return jsonObject;
     }
 
+    public String toFormattedString() {
+        return new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create().toJson(toJson());
+    }
+
     @Override
     public String toString() {
-        return new GsonBuilder().setPrettyPrinting().create().toJson(toJson());
+        return toJson().toString();
     }
 }
