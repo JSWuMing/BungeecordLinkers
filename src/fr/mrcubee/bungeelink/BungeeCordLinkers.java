@@ -6,12 +6,14 @@ import fr.mrcubee.bungeelink.listeners.RegisterListeners;
 import fr.mrcubee.bungeelink.player.ConnectionManager;
 import fr.mrcubee.bungeelink.security.KeyManager;
 import fr.mrcubee.bungeelink.security.KeyUtils;
+import fr.mrcubee.bungeelink.stats.PluginStats;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.config.Configuration;
 
 import java.io.File;
 import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class BungeeCordLinkers extends Plugin {
 
@@ -67,6 +69,7 @@ public class BungeeCordLinkers extends Plugin {
 
     @Override
     public void onEnable() {
+        this.getProxy().getScheduler().schedule(this, PluginStats.createNew(this), 0L, 2L, TimeUnit.MINUTES);
         this.getProxy().getPluginManager().registerCommand(this, new LinkerTabExecutor(this));
         if (getConfig() == null) {
             this.getLogger().severe("Config Error !");
