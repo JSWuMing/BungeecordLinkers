@@ -20,7 +20,7 @@ public class PlayerLoginFromLinkerListener implements Listener {
         String keyUsed;
 
         this.bungeeCordLinker.getLogger().info("[" + event.getConnection().getName() + "] <-> Connection from partner.\n"
-                + new GsonBuilder().setPrettyPrinting().create().toJson(event.getConnectionData().toJson()));
+                 + event.getConnectionData().toString());
         keyUsed = event.getKeyUsed();
         if (!event.isCancelled()) {
             if (keyUsed == null)

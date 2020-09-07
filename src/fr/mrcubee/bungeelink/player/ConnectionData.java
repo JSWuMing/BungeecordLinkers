@@ -1,20 +1,10 @@
 package fr.mrcubee.bungeelink.player;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.google.gson.*;
 import com.mysql.jdbc.StringUtils;
-import fr.mrcubee.bungeelink.security.KeyUtils;
-import net.md_5.bungee.api.connection.PendingConnection;
-import net.md_5.bungee.api.connection.ProxiedPlayer;
-import net.md_5.bungee.connection.InitialHandler;
 import net.md_5.bungee.connection.LoginResult;
 
 import java.net.InetSocketAddress;
-import java.security.PrivateKey;
-import java.util.ArrayList;
-import java.util.Base64;
 import java.util.UUID;
 
 public class ConnectionData {
@@ -90,11 +80,6 @@ public class ConnectionData {
     }
 
     public JsonElement toJson() {
-        return  new JsonParser().parse(toString());
-    }
-
-    @Override
-    public String toString() {
         JsonObject jsonObject = new JsonObject();
         JsonArray jsonArray;
         JsonObject jsonArrayObject;
@@ -129,6 +114,11 @@ public class ConnectionData {
             }
             jsonObject.add("properties", jsonArray);
         }
-        return jsonObject.toString();
+        return jsonObject;
+    }
+
+    @Override
+    public String toString() {
+        return new GsonBuilder().setPrettyPrinting().create().toJson(toJson());
     }
 }
