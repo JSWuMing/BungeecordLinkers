@@ -6,8 +6,6 @@ import net.md_5.bungee.api.plugin.Cancellable;
 import net.md_5.bungee.api.plugin.Event;
 import net.md_5.bungee.connection.InitialHandler;
 
-import java.util.Arrays;
-
 public class PlayerLoginFromLinkerEvent extends Event implements Cancellable {
 
     private boolean cancelled;

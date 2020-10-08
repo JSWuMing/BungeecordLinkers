@@ -1,7 +1,5 @@
 package fr.mrcubee.bungeelink.security;
 
-import net.md_5.bungee.BungeeCord;
-
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;

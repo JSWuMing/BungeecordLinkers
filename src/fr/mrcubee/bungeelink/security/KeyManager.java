@@ -1,7 +1,6 @@
 package fr.mrcubee.bungeelink.security;
 
 import com.mysql.jdbc.StringUtils;
-import io.netty.util.internal.StringUtil;
 import net.md_5.bungee.config.Configuration;
 
 import java.io.File;

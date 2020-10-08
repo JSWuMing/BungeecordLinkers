@@ -13,7 +13,6 @@ import net.md_5.bungee.connection.LoginResult;
 import java.net.InetSocketAddress;
 import java.security.PrivateKey;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.UUID;
 
 public class ConnectionDataBuilder {
