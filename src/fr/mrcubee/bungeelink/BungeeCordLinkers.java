@@ -5,7 +5,6 @@ import fr.mrcubee.bungeelink.config.ConfigurationManager;
 import fr.mrcubee.bungeelink.listeners.RegisterListeners;
 import fr.mrcubee.bungeelink.player.ConnectionManager;
 import fr.mrcubee.bungeelink.security.KeyManager;
-import fr.mrcubee.bungeelink.security.KeyUtils;
 import fr.mrcubee.bungeelink.stats.PluginStats;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.config.Configuration;
@@ -31,23 +30,13 @@ public class BungeeCordLinkers extends Plugin {
         this.connectionManager = new ConnectionManager();
     }
 
-    private void loadPrivateKeyFromConfig(Configuration configuration) {
-        File keyFile;
-
-        if (configuration == null)
-            return;
-        keyFile = new File(this.keyFolder, configuration.getString("private_key"));
-        if (!keyFile.exists() || !keyFile.isFile())
-            return;
-        this.getKeyManager().setPrivateKey(KeyUtils.loadPrivateKey(keyFile.toURI()));
-    }
-
-    private void loadPublicKeysFromConfig(Configuration configuration) {
+    private void loadKeys(Configuration configuration) {
         Collection<String> keys;
         File keyFile;
 
         if (configuration == null)
             return;
+        this.keyManager.registerPrivate(configuration.getString("private_key"));
         keys = configuration.getKeys();
         if (keys == null || keys.isEmpty())
             return;
@@ -55,7 +44,7 @@ public class BungeeCordLinkers extends Plugin {
             this.keyManager.register(name, configuration.getString(name));
     }
 
-    private void loadDisableKey(Configuration configuration) {
+    private void loadDisableKeys(Configuration configuration) {
         List<String> keyDisabled;
 
         if (configuration == null)
@@ -75,9 +64,8 @@ public class BungeeCordLinkers extends Plugin {
             this.getLogger().severe("Config Error !");
             return;
         }
-        loadPrivateKeyFromConfig(this.config);
-        loadPublicKeysFromConfig(this.config.getSection("keys"));
-        loadDisableKey(this.config);
+        loadDisableKeys(this.config);
+        loadDisableKeys(this.config);
         RegisterListeners.register(this);
     }
 

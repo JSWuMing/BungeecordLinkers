@@ -16,6 +16,7 @@ public class KeyManager {
     private Logger logger;
 
     private PrivateKey privateKey;
+    private String privateKeyFileName;
     private HashMap<String, PublicKey> keys;
     private HashMap<String, String> keysFileName;
     private Set<String> disabledKeys;
@@ -124,6 +125,31 @@ public class KeyManager {
         this.privateKey = privateKey;
     }
 
+    public boolean registerPrivate(String fileName) {
+        File keyFile;
+        String keyPath;
+        String keyFolderPath;
+        PrivateKey privateKey;
+
+        if (StringUtils.isEmptyOrWhitespaceOnly(fileName))
+            return false;
+        keyFile = new File(this.keyFolder, fileName);
+        try {
+            keyPath = keyFile.getCanonicalPath();
+            keyFolderPath = this.keyFolder.getCanonicalPath();
+        } catch (IOException ignored) {
+            return false;
+        }
+        if (!keyFile.exists() || !keyFile.isFile() || !keyPath.startsWith(keyFolderPath) || isLoaded(fileName))
+            return false;
+        privateKey = KeyUtils.loadPrivateKey(keyFile.toURI());
+        if (privateKey == null)
+            return false;
+        this.privateKey = privateKey;
+        this.privateKeyFileName = fileName;
+        return true;
+    }
+
     public PrivateKey getPrivateKey() {
         return privateKey;
     }
@@ -142,6 +168,7 @@ public class KeyManager {
         Configuration configuration = new Configuration();
         List<String> disableKeys = new ArrayList<String>(this.disabledKeys);
 
+        configuration.set("private_key", this.privateKeyFileName);
         for (Map.Entry<String, String> entry : this.keysFileName.entrySet())
             configuration.set("keys." + entry.getKey(), entry.getValue());
         configuration.set("disable", disableKeys);
