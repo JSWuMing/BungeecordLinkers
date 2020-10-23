@@ -31,17 +31,20 @@ public class BungeeCordLinkers extends Plugin {
     }
 
     private void loadKeys(Configuration configuration) {
+        Configuration keySection;
         Collection<String> keys;
-        File keyFile;
 
         if (configuration == null)
             return;
         this.keyManager.registerPrivate(configuration.getString("private_key"));
-        keys = configuration.getKeys();
-        if (keys == null || keys.isEmpty())
+        keySection = configuration.getSection("keys");
+        if (keySection == null)
             return;
-        for (String name : configuration.getKeys())
-            this.keyManager.register(name, configuration.getString(name));
+        keys = keySection.getKeys();
+        if (keys.isEmpty())
+            return;
+        for (String name : keys)
+            this.keyManager.register(name, keySection.getString(name));
     }
 
     private void loadDisableKeys(Configuration configuration) {
