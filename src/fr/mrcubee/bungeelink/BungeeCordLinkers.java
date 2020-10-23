@@ -64,7 +64,7 @@ public class BungeeCordLinkers extends Plugin {
             this.getLogger().severe("Config Error !");
             return;
         }
-        loadDisableKeys(this.config);
+        loadKeys(this.config);
         loadDisableKeys(this.config);
         RegisterListeners.register(this);
     }
