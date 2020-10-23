@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>fr.mrcubee.minecraft.bungeecord</groupId>
     <artifactId>bungeecordlinker</artifactId>
-    <version>1.4</version>
+    <version>1.5</version>
     
     <name>BungeeCordLinkers</name>
     <description>link multiple BungeeCord</description>
@@ -25,7 +25,7 @@
 
     <build>
         <defaultGoal>clean install</defaultGoal>
-        <finalName>BungeeCordLinker</finalName>
+        <finalName>BungeeCordLinkers</finalName>
         <sourceDirectory>src</sourceDirectory>
 
         <resources>
